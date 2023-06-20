@@ -13,6 +13,8 @@
     "_lint": "solhint '**/*.sol'",
     "_lint.fix": "solhint --fix '**/*.sol'",
     "mint": "cast send -i --rpc-url $MUMBAI_RPC_URL 0x92844a251EC890141F6617c9c2ef7eEb26a81ad8 'mint()'",
+    "train": "cast send -i --rpc-url $MUMBAI_RPC_URL 0x92844a251EC890141F6617c9c2ef7eEb26a81ad8 'train(uint256)' 0x0",
+    "tokenuri": "cast --to-ascii $(cast call --rpc-url $MUMBAI_RPC_URL 0x92844a251EC890141F6617c9c2ef7eEb26a81ad8 \"tokenURI(uint)\" 0x0) | awk -F',' '{print $2}' | base64 --decode",
     "test": "forge test"
   }
 }

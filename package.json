@@ -13,6 +13,7 @@
   "scripts": {
     "barrels": "barrelsby --config .barrelsby.json",
     "build": "turbo build",
+    "fix": "turbo _format.fix _lint.fix",
     "_format": "prettier --check .",
     "_format.fix": "prettier --write .",
     "format": "turbo _format",

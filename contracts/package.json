@@ -12,6 +12,7 @@
     "_format.fix": "forge fmt --root ..",
     "_lint": "solhint '**/*.sol'",
     "_lint.fix": "solhint --fix '**/*.sol'",
+    "mint": "cast send -i --rpc-url $MUMBAI_RPC_URL 0x92844a251EC890141F6617c9c2ef7eEb26a81ad8 'mint()'",
     "test": "forge test"
   }
 }

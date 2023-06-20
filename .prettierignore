@@ -7,4 +7,5 @@ contracts/out
 .idea
 
 contracts/lib/forge-std
+contracts/lib/openzeppelin-contracts
 cache

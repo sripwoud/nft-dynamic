@@ -1,0 +1,27 @@
+{
+  "name": "ui",
+  "scripts": {
+    "anvil": "source .env && anvil --fork-url $ANVIL_FORK_URL --chain-id $ANVIL_CHAIN_ID",
+    "build": "next build",
+    "dev": "npm run wagmi && next dev",
+    "dev:foundry": "npm run dev & wagmi generate --watch & npm run anvil",
+    "start": "next start",
+    "wagmi": "wagmi generate"
+  },
+  "dependencies": {
+    "contracts": "workspace:^",
+    "next": "^13.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "~0.3.36",
+    "wagmi": "^1.0.6"
+  },
+  "devDependencies": {
+    "@3pwd/eslint-config-react": "^1.0.0",
+    "@types/node": "^20.3.0",
+    "@types/react": "^18.2.11",
+    "@types/react-dom": "^18.2.4",
+    "eslint-config-next": "^13.4.5",
+    "typescript": "^5.1.3"
+  }
+}

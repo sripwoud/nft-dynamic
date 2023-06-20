@@ -1,0 +1,27 @@
+{
+  "name": "dapp-template",
+  "author": "3pwd <me@3pwd.xyz>",
+  "license": "MIT",
+  "devDependencies": {
+    "@3pwd/prettier-config": "^1.0.1",
+    "@wagmi/cli": "^1.0.0",
+    "barrelsby": "^2.8.0",
+    "eslint": "^8.42.0",
+    "turbo": "^1.10.3",
+    "wagmi": "^1.0.6"
+  },
+  "scripts": {
+    "barrels": "barrelsby --config .barrelsby.json",
+    "build": "turbo build",
+    "_format": "prettier --check .",
+    "_format.fix": "prettier --write .",
+    "format": "turbo _format",
+    "format.fix": "turbo _format.fix",
+    "_lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "_lint.fix": "eslint --ext .ts,.tsx --fix .",
+    "lint": "turbo _lint",
+    "lint.fix": "turbo _lint.fix",
+    "test": "turbo test",
+    "validate": "turbo build _format _lint"
+  }
+}

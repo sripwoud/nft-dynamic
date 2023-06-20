@@ -1,0 +1,55 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [
+        "ui/.next/**",
+        "ui/src/generated.ts",
+        "!ui/.next/cache/**",
+        "contracts/out/**/*.json"
+      ]
+    },
+    "lint": {
+      "inputs": ["src/**/*.{js,jsx,ts,tsx}", "contracts/**/*.sol"]
+    },
+    "//#_format": {
+      "inputs": [
+        "*.{css,html,md,json,?(c){j,t}s?(x),y?(a)ml}",
+        "{contracts,ui}/**/*.{css,html,md,json,?(c){j,t}s?(x),y?(a)ml}",
+        "!ui/.next/**/*",
+        "!contracts/out/**/*"
+      ]
+    },
+    "//#_format.fix": {
+      "inputs": [
+        "*.{css,html,md,json,?(c){j,t}s?(x),y?(a)ml}",
+        "{contracts,ui}/**/*.{css,html,md,json,?(c){j,t}s?(x),y?(a)ml}",
+        "!ui/.next/**/*",
+        "!contracts/out/**/*"
+      ]
+    },
+    "_format": {
+      "cache": false
+    },
+    "_format.fix": {
+      "cache": false
+    },
+    "//#_lint": {
+      "inputs": ["*.?(c){j,t}s?(x)", "!ui/{.next,node_modules}/**/*"]
+    },
+    "//#_lint.fix": {
+      "inputs": ["*.?(c){j,t}s?(x)", "!ui/{.next,node_modules}/**/*"]
+    },
+    "_lint": {
+      "cache": false
+    },
+    "_lint.fix": {
+      "cache": false
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["contracts/**/*.sol"]
+    }
+  }
+}

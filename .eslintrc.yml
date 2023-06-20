@@ -1,0 +1,3 @@
+extends: ['@3pwd/eslint-config-react']
+parserOptions:
+  project: ['tsconfig.json', 'ui/tsconfig.json']

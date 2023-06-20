@@ -1,0 +1,4 @@
+.next
+ui/src/generated.ts
+ui/next-env.d.ts
+node_modules

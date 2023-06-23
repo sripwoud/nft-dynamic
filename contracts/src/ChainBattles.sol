@@ -2,9 +2,12 @@
 
 pragma solidity ^0.8.0;
 
+import "openzeppelin/utils/introspection/IERC165.sol";
+import "openzeppelin/token/ERC721/IERC721.sol";
 import "openzeppelin/token/ERC721/extensions/ERC721URIStorage.sol";
 import "openzeppelin/token/ERC721/extensions/ERC721Enumerable.sol";
 import "openzeppelin/token/ERC721/extensions/IERC721Enumerable.sol";
+import "openzeppelin/token/ERC721/extensions/IERC721Metadata.sol";
 import "openzeppelin/utils/Counters.sol";
 import "openzeppelin/utils/Strings.sol";
 import "openzeppelin/utils/Base64.sol";
@@ -59,7 +62,9 @@ contract ChainBattles is ERC721URIStorage, ERC721Enumerable {
         override(ERC721URIStorage, ERC721Enumerable)
         returns (bool)
     {
-        return interfaceId == bytes4(0x49064906) || super.supportsInterface(interfaceId);
+        return interfaceId == type(IERC721).interfaceId || interfaceId == type(IERC721Enumerable).interfaceId
+            || interfaceId == type(IERC721Metadata).interfaceId || interfaceId == bytes4(0x49064906) // ERC721URIStorage
+            || interfaceId == type(IERC165).interfaceId;
     }
 
     function tokenURI(uint256 tokenId) public view virtual override(ERC721, ERC721URIStorage) returns (string memory) {

@@ -4,6 +4,12 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import "../src/ChainBattles.sol";
 import "openzeppelin/token/ERC721/IERC721Receiver.sol";
+import "openzeppelin/utils/introspection/IERC165.sol";
+import "openzeppelin/token/ERC721/IERC721.sol";
+import "openzeppelin/token/ERC721/extensions/ERC721URIStorage.sol";
+import "openzeppelin/token/ERC721/extensions/ERC721Enumerable.sol";
+import "openzeppelin/token/ERC721/extensions/IERC721Enumerable.sol";
+import "openzeppelin/token/ERC721/extensions/IERC721Metadata.sol";
 
 /// @dev Expose internal methods for testing
 contract PublicChainBattles is ChainBattles {
@@ -31,6 +37,15 @@ contract ChainBattlesTest is Test, IERC721Receiver {
         assertEq(chainBattles.name(), "ChainBattles");
         assertEq(chainBattles.symbol(), "CBTLS");
         assertEq(chainBattles.totalSupply(), 0);
+    }
+
+    function testSupportsInterface() public {
+        emit logs(abi.encodeWithSelector(type(IERC721Metadata).interfaceId));
+        assertTrue(chainBattles.supportsInterface(0x80ac58cd)); // IERC721
+        assertTrue(chainBattles.supportsInterface(0x780e9d63)); // IERC721Enumerable
+        assertTrue(chainBattles.supportsInterface(0x5b5e139f)); // IERC721Metadata
+        assertTrue(chainBattles.supportsInterface(0x49064906)); // ERC721URIStorage
+        assertTrue(chainBattles.supportsInterface(0x01ffc9a7)); // IERC165
     }
 
     function testGenerateTokenURI() public {
@@ -69,12 +84,14 @@ contract ChainBattlesTest is Test, IERC721Receiver {
         );
     }
 
-
     function testTrain() public {
         chainBattles.mint();
         assertEq(chainBattles.getLevel(0), "0");
         chainBattles.train(0);
         assertEq(chainBattles.getLevel(0), "1");
-        assertEq(chainBattles.generateCharacter(0),"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj48c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPjx0ZXh0IHg9IjUwJSIgeT0iNDAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+V2FycmlvcjwvdGV4dD48dGV4dCB4PSI1MCUiIHk9IjUwJSIgY2xhc3M9ImJhc2UiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkxldmVsczogMTwvdGV4dD48L3N2Zz4=");
+        assertEq(
+            chainBattles.generateCharacter(0),
+            "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj48c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPjx0ZXh0IHg9IjUwJSIgeT0iNDAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+V2FycmlvcjwvdGV4dD48dGV4dCB4PSI1MCUiIHk9IjUwJSIgY2xhc3M9ImJhc2UiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkxldmVsczogMTwvdGV4dD48L3N2Zz4="
+        );
     }
 }

@@ -4,12 +4,6 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import "../src/ChainBattles.sol";
 import "openzeppelin/token/ERC721/IERC721Receiver.sol";
-import "openzeppelin/utils/introspection/IERC165.sol";
-import "openzeppelin/token/ERC721/IERC721.sol";
-import "openzeppelin/token/ERC721/extensions/ERC721URIStorage.sol";
-import "openzeppelin/token/ERC721/extensions/ERC721Enumerable.sol";
-import "openzeppelin/token/ERC721/extensions/IERC721Enumerable.sol";
-import "openzeppelin/token/ERC721/extensions/IERC721Metadata.sol";
 
 /// @dev Expose internal methods for testing
 contract PublicChainBattles is ChainBattles {
@@ -24,6 +18,7 @@ contract ChainBattlesTest is Test, IERC721Receiver {
     /// @dev addresses that receives ERC721 tokens need to implement this interface
     function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
         external
+        pure
         returns (bytes4)
     {
         return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
@@ -40,7 +35,6 @@ contract ChainBattlesTest is Test, IERC721Receiver {
     }
 
     function testSupportsInterface() public {
-        emit logs(abi.encodeWithSelector(type(IERC721Metadata).interfaceId));
         assertTrue(chainBattles.supportsInterface(0x80ac58cd)); // IERC721
         assertTrue(chainBattles.supportsInterface(0x780e9d63)); // IERC721Enumerable
         assertTrue(chainBattles.supportsInterface(0x5b5e139f)); // IERC721Metadata
